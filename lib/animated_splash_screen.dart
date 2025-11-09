@@ -4,12 +4,13 @@ import 'package:tasky/app_colors.dart';
 
 class AnimatedSplashScreen extends StatefulWidget {
   const AnimatedSplashScreen({super.key});
-
+  static const String pageRoute = 'Animated Splash Screen';
   @override
   State<AnimatedSplashScreen> createState() => _AnimatedSplashScreenState();
 }
 
 class _AnimatedSplashScreenState extends State<AnimatedSplashScreen> {
+
   @override
   void initState() {
     super.initState();

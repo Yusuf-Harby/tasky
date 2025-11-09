@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/animated_splash_screen.dart';
+import 'package:tasky/login_screen.dart';
 import 'package:tasky/onboarding_screen.dart';
 
 void main (){
@@ -12,10 +13,11 @@ class Tasky extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: 'Animated Splash Screen',
+      initialRoute: AnimatedSplashScreen.pageRoute,
       routes: {
-        'Animated Splash Screen' : (context) => AnimatedSplashScreen(),
-        'Onboarding Screen' : (context) => OnboardingScreen(),
+        AnimatedSplashScreen.pageRoute : (context) => AnimatedSplashScreen(),
+        OnboardingScreen.pageRoute : (context) => OnboardingScreen(),
+        LoginScreen.pageRoute : (context) => LoginScreen(),
       },
     );
   }
