@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tasky/animated_splash_screen.dart';
 import 'package:tasky/firebase_options.dart';
 import 'package:tasky/home_screen.dart';
-import 'package:tasky/login_screen.dart';
+import 'package:tasky/auth/screens/login_screen.dart';
 import 'package:tasky/onboarding_screen.dart';
-import 'package:tasky/register_screen.dart';
+import 'package:tasky/auth/screens/register_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

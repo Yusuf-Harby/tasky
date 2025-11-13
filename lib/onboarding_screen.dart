@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:tasky/login_screen.dart';
+import 'package:tasky/auth/screens/login_screen.dart';
 import 'app_colors.dart';
 import 'custom_animated_widget.dart';
 import 'onboarding_data.dart';

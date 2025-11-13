@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/custom_text_form_field_widget.dart';
-import 'package:tasky/register_widget.dart';
-import 'package:tasky/validator.dart';
-import 'app_colors.dart';
+import 'package:tasky/auth/widgets/register_widget.dart';
+import 'package:tasky/utils/validator.dart';
+import '../../app_colors.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
