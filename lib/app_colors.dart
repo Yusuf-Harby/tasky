@@ -5,4 +5,5 @@ abstract class AppColor {
   static final Color grayText = Color(0xff817D8D);
   static final Color gray = Color(0xffAFAFAF);
   static final Color white = Color(0xffffffff);
+  static final Color black = Color(0xff000000);
 }

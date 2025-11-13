@@ -15,9 +15,9 @@ class Tasky extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: AnimatedSplashScreen.pageRoute,
       routes: {
-        AnimatedSplashScreen.pageRoute : (context) => AnimatedSplashScreen(),
-        OnboardingScreen.pageRoute : (context) => OnboardingScreen(),
-        LoginScreen.pageRoute : (context) => LoginScreen(),
+        AnimatedSplashScreen.pageRoute : (_) => AnimatedSplashScreen(),
+        OnboardingScreen.pageRoute : (_) => OnboardingScreen(),
+        LoginScreen.pageRoute : (_) => LoginScreen(),
       },
     );
   }
