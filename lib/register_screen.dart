@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:tasky/custom_text_form_field_widget.dart';
-import 'package:tasky/home_screen.dart';
-import 'package:tasky/register_screen.dart';
 import 'package:tasky/register_widget.dart';
 import 'package:tasky/validator.dart';
 import 'app_colors.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-  static const String pageRoute = 'Login Screen';
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+  static const String pageRoute = 'Register Screen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final TextEditingController username = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
@@ -30,11 +30,11 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 112),
+              SizedBox(height: 97),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Login',
+                  'Register',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -42,7 +42,26 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 53),
+              SizedBox(height: 23),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Username',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.title,
+                  ),
+                ),
+              ),
+              SizedBox(height: 5),
+              TextFormFieldWidget(
+                controller: username,
+                validator: Validator.validateName,
+                hintText: 'enter username',
+                keyboardType: TextInputType.name,
+              ),
+              SizedBox(height: 11),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -61,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'enter email',
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 26),
+              SizedBox(height: 11),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -82,13 +101,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 keyboardType: TextInputType.visiblePassword,
               ),
-              SizedBox(height: 71),
+              SizedBox(height: 11),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Confirm Password',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.title,
+                  ),
+                ),
+              ),
+              SizedBox(height: 5),
+              TextFormFieldWidget(
+                controller: confirmPassword,
+                validator: (val) => Validator.validateConfirmPassword(val, password.text),
+                hintText: 'Password',
+                isPassword: true,
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+              ),
+              SizedBox(height: 76),
               MaterialButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.of(
-                      context,
-                    ).pushReplacementNamed(HomeScreen.pageRoute);
+                    Navigator.of(context).pop();
                   }
                 },
                 color: AppColor.primary,
@@ -99,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
                       color: AppColor.white,
                       fontSize: 16,
@@ -108,12 +146,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 246),
+              SizedBox(height: 112),
               RegisterWidget(
-                question: "Don't have an account? ",
-                action: 'Register',
+                question: "Already have an account? ",
+                action: 'Login',
                 onTap: () {
-                  Navigator.of(context).pushNamed(RegisterScreen.pageRoute);
+                  Navigator.of(context).pop();
                 },
               ),
             ],
