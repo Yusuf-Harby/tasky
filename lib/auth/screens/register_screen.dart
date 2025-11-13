@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print, unused_local_variable
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky/custom_text_form_field_widget.dart';
 import 'package:tasky/auth/widgets/register_widget.dart';
+import 'package:tasky/utils/app_dialog.dart';
 import 'package:tasky/utils/validator.dart';
 import '../../app_colors.dart';
 
@@ -18,6 +22,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Future<void> register({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw e.message ?? 'An error occurred';
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +143,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: 76 / 812 * size.height),
               MaterialButton(
-                onPressed: () {
+                onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    Navigator.of(context).pop();
+                    AppDialog.showLoading(context, size);
+                    await register(email: email.text, password: password.text)
+                        .then((value) {
+                          Navigator.of(context).pop();
+                          username.clear();
+                          email.clear();
+                          password.clear();
+                          confirmPassword.clear();
+                          Navigator.of(context).pop();
+                        })
+                        .catchError((error) {
+                          Navigator.of(context).pop();
+                          AppDialog.showError(
+                            context,
+                            size,
+                            error: error.toString(),
+                          );
+                        });
                   }
                 },
                 color: AppColor.primary,

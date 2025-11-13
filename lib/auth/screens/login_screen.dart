@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously, avoid_print, unused_local_variable
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tasky/custom_text_form_field_widget.dart';
 import 'package:tasky/home_screen.dart';
 import 'package:tasky/auth/screens/register_screen.dart';
 import 'package:tasky/auth/widgets/register_widget.dart';
+import 'package:tasky/utils/app_dialog.dart';
 import 'package:tasky/utils/validator.dart';
 import '../../app_colors.dart';
 
@@ -18,6 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Future<void> login({required String email, required String password}) async {
+    try {
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw 'incorrect email or password';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +101,22 @@ class _LoginScreenState extends State<LoginScreen> {
               MaterialButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.of(
-                      context,
-                    ).pushReplacementNamed(HomeScreen.pageRoute);
+                    AppDialog.showLoading(context, size);
+                    login(email: email.text, password: password.text)
+                        .then((value) {
+                          Navigator.of(context).pop();
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(HomeScreen.pageRoute);
+                        })
+                        .catchError((error) {
+                          Navigator.of(context).pop();
+                          AppDialog.showError(
+                            context,
+                            size,
+                            error: error.toString(),
+                          );
+                        });
                   }
                 },
                 color: AppColor.primary,
