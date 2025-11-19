@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tasky/auth/screens/login_screen.dart';
 import 'app_colors.dart';
@@ -18,17 +19,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   PageController controller = PageController();
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24 / 375 * size.width),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Spacer(),
             SizedBox(
-              height: 240 / 812 * size.height,
+              height: 240.h,
               child: PageView.builder(
                 controller: controller,
                 onPageChanged: (index) {
@@ -47,43 +47,43 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 },
               ),
             ),
-            SizedBox(height: 30 / 812 * size.height),
+            SizedBox(height: 30.h),
             SmoothPageIndicator(
               controller: controller,
               count: onboarding.length,
               effect: ExpandingDotsEffect(
-                dotHeight: 4 / 812 * size.height,
-                dotWidth: 26 / 375 * size.width,
-                radius: 56 / 375 * size.width,
+                dotHeight: 4.h,
+                dotWidth: 26.w,
+                radius: 56.r,
                 dotColor: AppColor.gray,
                 activeDotColor: AppColor.primary,
                 strokeWidth: 0,
-                expansionFactor: 1.1,
+                expansionFactor: 1.1.w,
               ),
             ),
-            SizedBox(height: 50 / 812 * size.height),
+            SizedBox(height: 50.h),
             CustomAnimatedWidget(
               delay: index * 2 + 500,
               index: index + 1,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16 / 375 * size.width),
+                margin: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   children: [
                     Text(
                       onboarding[index].title,
                       style: TextStyle(
                         color: AppColor.title,
-                        fontSize: 32 / 375 * size.width,
+                        fontSize: 32.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 42 / 812 * size.height),
+                    SizedBox(height: 42.h),
                     Text(
                       onboarding[index].description,
                       style: TextStyle(
                         color: AppColor.grayText,
-                        fontSize: 16 / 375 * size.width,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w400,
                       ),
                       textAlign: TextAlign.center,
@@ -114,14 +114,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 24 / 375 * size.width,
-                    vertical: 12 / 812 * size.height,
+                    horizontal: 24.w,
+                    vertical: 12.h,
                   ),
                   child: Text(
                     index == onboarding.length - 1 ? 'GET STARTED' : 'NEXT',
                     style: TextStyle(
                       color: AppColor.white,
-                      fontSize: 16 / 375 * size.width,
+                      fontSize: 16.w,
                       fontWeight: FontWeight.w400,
                     ),
                     textAlign: TextAlign.center,
@@ -129,7 +129,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 62 / 812 * size.height),
+            SizedBox(height: 62.h),
           ],
         ),
       ),

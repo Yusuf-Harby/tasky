@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tasky/app_colors.dart';
 
 abstract class AppDialog {
-  static void showLoading(BuildContext context, Size size) {
+  static void showLoading(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -12,11 +13,11 @@ abstract class AppDialog {
           content: Row(
             children: [
               CircularProgressIndicator(color: AppColor.primary),
-              SizedBox(width: 20 / 375 * size.width),
+              SizedBox(width: 20.w),
               Text(
                 'Loading...',
                 style: TextStyle(
-                  fontSize: 16 / 375 * size.width,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColor.title,
                 ),
@@ -28,11 +29,7 @@ abstract class AppDialog {
     );
   }
 
-  static void showError(
-    BuildContext context,
-    Size size, {
-    required String error,
-  }) {
+  static void showError(BuildContext context, {required String error}) {
     showDialog(
       context: context,
       barrierDismissible: false,

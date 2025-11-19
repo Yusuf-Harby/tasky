@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../app_colors.dart';
 
 class RegisterWidget extends StatelessWidget {
@@ -13,7 +14,6 @@ class RegisterWidget extends StatelessWidget {
   final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: onTap,
       child: Row(
@@ -23,7 +23,7 @@ class RegisterWidget extends StatelessWidget {
             question,
             style: TextStyle(
               color: AppColor.grayText,
-              fontSize: 12 / 375 * size.width,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
             ),
           ),
@@ -31,7 +31,7 @@ class RegisterWidget extends StatelessWidget {
             action,
             style: TextStyle(
               color: AppColor.primary,
-              fontSize: 12 / 375 * size.width,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
             ),
           ),

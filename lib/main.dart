@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tasky/animated_splash_screen.dart';
 import 'package:tasky/firebase_options.dart';
 import 'package:tasky/home_screen.dart';
@@ -18,15 +19,22 @@ class Tasky extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: AnimatedSplashScreen.pageRoute,
-      routes: {
-        AnimatedSplashScreen.pageRoute: (_) => AnimatedSplashScreen(),
-        OnboardingScreen.pageRoute: (_) => OnboardingScreen(),
-        LoginScreen.pageRoute: (_) => LoginScreen(),
-        RegisterScreen.pageRoute: (_) => RegisterScreen(),
-        HomeScreen.pageRoute: (_) => HomeScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialRoute: HomeScreen.pageRoute,
+          routes: {
+            AnimatedSplashScreen.pageRoute: (_) => AnimatedSplashScreen(),
+            OnboardingScreen.pageRoute: (_) => OnboardingScreen(),
+            LoginScreen.pageRoute: (_) => LoginScreen(),
+            RegisterScreen.pageRoute: (_) => RegisterScreen(),
+            HomeScreen.pageRoute: (_) => HomeScreen(),
+          },
+        );
       },
     );
   }

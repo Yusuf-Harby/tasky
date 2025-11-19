@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tasky/app_colors.dart';
 
 class AnimatedSplashScreen extends StatefulWidget {
@@ -10,17 +13,14 @@ class AnimatedSplashScreen extends StatefulWidget {
 }
 
 class _AnimatedSplashScreenState extends State<AnimatedSplashScreen> {
-
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-        Duration(seconds: 4),
-        (){
-          Navigator.of(context).pushReplacementNamed('Onboarding Screen');
-        }
-    );
+    Future.delayed(Duration(seconds: 4), () {
+      Navigator.of(context).pushReplacementNamed('Onboarding Screen');
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen> {
       body: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 2,
+          spacing: 2.w,
           children: [
             FadeInLeft(
               delay: Duration(milliseconds: 2000),

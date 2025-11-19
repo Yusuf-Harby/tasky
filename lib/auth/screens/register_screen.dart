@@ -145,7 +145,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               MaterialButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    AppDialog.showLoading(context, size);
+                    AppDialog.showLoading(context);
                     await register(email: email.text, password: password.text)
                         .then((value) {
                           Navigator.of(context).pop();
@@ -157,11 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         })
                         .catchError((error) {
                           Navigator.of(context).pop();
-                          AppDialog.showError(
-                            context,
-                            size,
-                            error: error.toString(),
-                          );
+                          AppDialog.showError(context, error: error.toString());
                         });
                   }
                 },
