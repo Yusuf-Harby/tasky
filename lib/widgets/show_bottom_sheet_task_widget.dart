@@ -1,9 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/validator.dart';
 import 'package:tasky/widgets/custom_text_form_field_widget.dart';
+import 'package:tasky/widgets/priority_dialog_widget.dart';
 
 class ShowBottomSheetTask extends StatefulWidget {
   const ShowBottomSheetTask({super.key});
@@ -59,9 +62,20 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
                     DateTime.now();
               }),
               SizedBox(width: 10.w),
-              _iconAction('assets/icons/flag.svg', () {}),
+              _iconAction('assets/icons/flag.svg', () {
+                showDialog(
+                  context: context,
+                  builder: (context) => PriorityDialogWidget(
+                    onTap: (index) {
+                      priority = index;
+                    },
+                  ),
+                );
+              }),
               const Spacer(),
-              _iconAction('assets/icons/send.svg', () {}),
+              _iconAction('assets/icons/send.svg', () {
+                
+              }),
             ],
           ),
           SizedBox(height: 25.h),
@@ -80,11 +94,13 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
   late TextEditingController taskName;
   late TextEditingController taskDescription;
   late DateTime selectedDate;
+  late int priority;
   @override
   void initState() {
     super.initState();
     taskName = TextEditingController();
     taskDescription = TextEditingController();
+    priority = 1;
     selectedDate = DateTime.now();
   }
 
