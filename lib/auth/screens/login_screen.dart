@@ -3,13 +3,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tasky/custom_text_form_field_widget.dart';
-import 'package:tasky/home_screen.dart';
+import 'package:tasky/auth/data/firebase/firebase_database_user.dart';
+import 'package:tasky/core/network/firebase_result.dart';
+import 'package:tasky/widgets/custom_text_form_field_widget.dart';
+import 'package:tasky/home/screens/home_screen.dart';
 import 'package:tasky/auth/screens/register_screen.dart';
 import 'package:tasky/auth/widgets/register_widget.dart';
-import 'package:tasky/utils/app_dialog.dart';
-import 'package:tasky/utils/validator.dart';
-import '../../app_colors.dart';
+import 'package:tasky/core/utils/app_dialog.dart';
+import 'package:tasky/core/utils/validator.dart';
+import '../../core/utils/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,17 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  Future<void> login({required String email, required String password}) async {
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      throw 'incorrect email or password';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,22 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 71.h),
               MaterialButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    AppDialog.showLoading(context);
-                    login(email: email.text, password: password.text)
-                        .then((value) {
-                          Navigator.of(context).pop();
-                          Navigator.of(
-                            context,
-                          ).pushReplacementNamed(HomeScreen.pageRoute);
-                        })
-                        .catchError((error) {
-                          Navigator.of(context).pop();
-                          AppDialog.showError(context, error: error.toString());
-                        });
-                  }
-                },
+                onPressed: login,
                 color: AppColor.primary,
                 minWidth: double.infinity,
                 shape: RoundedRectangleBorder(
@@ -145,5 +121,23 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> login() async {
+    if (formKey.currentState!.validate()) {
+      AppDialog.showLoading(context);
+      final result = await FBAUser.loginUser(
+        email: email.text,
+        password: password.text,
+      );
+      switch (result) {
+        case FBSuccess<UserCredential>():
+          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacementNamed(HomeScreen.pageRoute);
+        case FBError<UserCredential>():
+          Navigator.of(context).pop();
+          AppDialog.showError(context, error: result.message.toString());
+      }
+    }
   }
 }

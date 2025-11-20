@@ -1,11 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tasky/animated_splash_screen.dart';
+import 'package:tasky/screens/animated_splash_screen.dart';
 import 'package:tasky/firebase_options.dart';
-import 'package:tasky/home_screen.dart';
+import 'package:tasky/home/screens/home_screen.dart';
 import 'package:tasky/auth/screens/login_screen.dart';
-import 'package:tasky/onboarding_screen.dart';
+import 'package:tasky/screens/onboarding_screen.dart';
 import 'package:tasky/auth/screens/register_screen.dart';
 
 void main() async {
@@ -26,7 +26,7 @@ class Tasky extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: HomeScreen.pageRoute,
+          initialRoute: LoginScreen.pageRoute,
           routes: {
             AnimatedSplashScreen.pageRoute: (_) => AnimatedSplashScreen(),
             OnboardingScreen.pageRoute: (_) => OnboardingScreen(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tasky/app_colors.dart';
+import 'package:tasky/core/utils/app_colors.dart';
 
 abstract class AppDialog {
   static void showLoading(BuildContext context) {
