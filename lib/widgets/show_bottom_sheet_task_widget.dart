@@ -77,12 +77,13 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
 
   late TextEditingController taskName;
   late TextEditingController taskDescription;
-
+  late DateTime selectedDate;
   @override
   void initState() {
     super.initState();
     taskName = TextEditingController();
     taskDescription = TextEditingController();
+    selectedDate = DateTime.now();
   }
 
   @override
