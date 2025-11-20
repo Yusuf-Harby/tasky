@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -85,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _addTask() {
+    print(FirebaseAuth.instance.currentUser?.email);
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,

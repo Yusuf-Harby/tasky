@@ -1,10 +1,14 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasky/core/network/firebase_result.dart';
 import 'package:tasky/core/utils/app_colors.dart';
+import 'package:tasky/core/utils/app_dialog.dart';
 import 'package:tasky/core/utils/validator.dart';
+import 'package:tasky/home/data/firebase/firebase_task.dart';
+import 'package:tasky/home/data/model/task_model.dart';
 import 'package:tasky/widgets/custom_text_form_field_widget.dart';
 import 'package:tasky/widgets/priority_dialog_widget.dart';
 
@@ -73,9 +77,7 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
                 );
               }),
               const Spacer(),
-              _iconAction('assets/icons/send.svg', () {
-                
-              }),
+              _iconAction('assets/icons/send.svg', _onTapSendTask),
             ],
           ),
           SizedBox(height: 25.h),
@@ -89,6 +91,27 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
       onTap: onTap,
       child: SvgPicture.asset(image, width: 24.w, height: 24.w),
     );
+  }
+
+  void _onTapSendTask() async {
+    AppDialog.showLoading(context);
+    final result = await FBTask.addTask(
+      TaskModel(
+        title: taskName.text,
+        description: taskDescription.text,
+        date: selectedDate,
+        priority: priority,
+      ),
+    );
+
+    switch (result) {
+      case FBSuccess():
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+      case FBError():
+        Navigator.of(context).pop();
+        AppDialog.showError(context, error: result.message.toString());
+    }
   }
 
   late TextEditingController taskName;
