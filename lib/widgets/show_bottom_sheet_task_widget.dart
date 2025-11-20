@@ -48,13 +48,15 @@ class _ShowBottomSheetTaskState extends State<ShowBottomSheetTask> {
           SizedBox(height: 20.h),
           Row(
             children: [
-              _iconAction('assets/icons/date.svg', () {
-                showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(Duration(days: 365)),
-                );
+              _iconAction('assets/icons/date.svg', () async {
+                selectedDate =
+                    await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(Duration(days: 365)),
+                    ) ??
+                    DateTime.now();
               }),
               SizedBox(width: 10.w),
               _iconAction('assets/icons/flag.svg', () {}),
