@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/validator.dart';
 import 'package:tasky/widgets/custom_text_form_field_widget.dart';
+import 'package:tasky/widgets/show_bottom_sheet_task_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -89,71 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (context) => Container(
-        padding: EdgeInsets.only(
-          left: 24.w,
-          right: 24.w,
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        height: 270.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: AppColor.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.r),
-            topRight: Radius.circular(20.r),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 25.h),
-            Text(
-              'Add Task',
-              style: TextStyle(
-                color: AppColor.title,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 14.h),
-            TextFormFieldWidget(
-              controller: taskName,
-              hintText: 'Do Flutter project',
-              validator: Validator.validateName,
-            ),
-            SizedBox(height: 12.h),
-            TextFormFieldWidget(
-              controller: taskDescription,
-              hintText: 'Description',
-              validator: Validator.validateName,
-            ),
-            SizedBox(height: 20.h),
-            Row(
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/date.svg',
-                  width: 24.w,
-                  height: 24.w,
-                ),
-                SizedBox(width: 10.w),
-                SvgPicture.asset(
-                  'assets/icons/flag.svg',
-                  width: 24.w,
-                  height: 24.w,
-                ),
-                Spacer(),
-                SvgPicture.asset(
-                  'assets/icons/send.svg',
-                  width: 24.w,
-                  height: 24.w,
-                ),
-              ],
-            ),
-            SizedBox(height: 17.h),
-          ],
-        ),
-      ),
+      builder: (context) => ShowBottomSheetTask(),
     );
   }
 }
