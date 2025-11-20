@@ -130,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               SizedBox(height: 76.h),
               MaterialButton(
-                onPressed: register,
+                onPressed: _register,
                 color: AppColor.primary,
                 minWidth: double.infinity,
                 shape: RoundedRectangleBorder(
@@ -163,7 +163,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future<void> register() async {
+  Future<void> _register() async {
     if (formKey.currentState!.validate()) {
       AppDialog.showLoading(context);
       final result = await FBAUser.registerUser(

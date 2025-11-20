@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 71.h),
               MaterialButton(
-                onPressed: login,
+                onPressed: _login,
                 color: AppColor.primary,
                 minWidth: double.infinity,
                 shape: RoundedRectangleBorder(
@@ -123,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> login() async {
+  Future<void> _login() async {
     if (formKey.currentState!.validate()) {
       AppDialog.showLoading(context);
       final result = await FBAUser.loginUser(

@@ -2,11 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tasky/core/utils/app_colors.dart';
+import 'package:tasky/core/utils/validator.dart';
+import 'package:tasky/widgets/custom_text_form_field_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const String pageRoute = 'Home Screen';
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController taskName = TextEditingController();
+  final TextEditingController taskDescription = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,10 +76,82 @@ class HomeScreen extends StatelessWidget {
         width: 60.w,
         height: 60.w,
         child: FloatingActionButton(
-          onPressed: () {},
+          onPressed: _addTask,
           backgroundColor: AppColor.title,
           shape: CircleBorder(),
           child: Icon(Icons.add, color: AppColor.primary),
+        ),
+      ),
+    );
+  }
+
+  void _addTask() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.only(
+          left: 24.w,
+          right: 24.w,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        height: 270.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.r),
+            topRight: Radius.circular(20.r),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 25.h),
+            Text(
+              'Add Task',
+              style: TextStyle(
+                color: AppColor.title,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 14.h),
+            TextFormFieldWidget(
+              controller: taskName,
+              hintText: 'Do Flutter project',
+              validator: Validator.validateName,
+            ),
+            SizedBox(height: 12.h),
+            TextFormFieldWidget(
+              controller: taskDescription,
+              hintText: 'Description',
+              validator: Validator.validateName,
+            ),
+            SizedBox(height: 20.h),
+            Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/date.svg',
+                  width: 24.w,
+                  height: 24.w,
+                ),
+                SizedBox(width: 10.w),
+                SvgPicture.asset(
+                  'assets/icons/flag.svg',
+                  width: 24.w,
+                  height: 24.w,
+                ),
+                Spacer(),
+                SvgPicture.asset(
+                  'assets/icons/send.svg',
+                  width: 24.w,
+                  height: 24.w,
+                ),
+              ],
+            ),
+            SizedBox(height: 17.h),
+          ],
         ),
       ),
     );

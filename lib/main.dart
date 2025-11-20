@@ -26,7 +26,7 @@ class Tasky extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          initialRoute: LoginScreen.pageRoute,
+          initialRoute: HomeScreen.pageRoute,
           routes: {
             AnimatedSplashScreen.pageRoute: (_) => AnimatedSplashScreen(),
             OnboardingScreen.pageRoute: (_) => OnboardingScreen(),
