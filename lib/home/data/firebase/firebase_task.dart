@@ -31,4 +31,14 @@ abstract class FBTask {
       return FBError(message: e.toString());
     }
   }
+
+  static Future<FBResult<List<TaskModel>>> getTasks() async {
+    try {
+      final snapshot = await _getCollection.get();
+      final tasks = snapshot.docs.map((doc) => doc.data()).toList();
+      return FBSuccess(data: tasks);
+    } catch (e) {
+      return FBError(message: e.toString());
+    }
+  }
 }
