@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tasky/auth/screens/login_screen.dart';
 import 'package:tasky/core/network/firebase_result.dart';
 import 'package:tasky/core/utils/app_colors.dart';
 import 'package:tasky/core/utils/app_dialog.dart';
@@ -22,13 +23,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController taskName = TextEditingController();
   final TextEditingController taskDescription = TextEditingController();
   List<TaskModel> tasks = [];
+  List<TaskModel> completedTasks = [];
   bool isLoading = false;
   void getTasks() async {
     isLoading = true;
     final result = await FBTask.getTasks();
     switch (result) {
       case FBSuccess<List<TaskModel>>():
-        tasks = result.data ?? [];
+        List<TaskModel> allTasks = result.data ?? [];
+        tasks = allTasks.where((task) => task.isCompleted == false).toList();
+        completedTasks = tasks
+            .where((task) => task.isCompleted == true)
+            .toList();
         isLoading = false;
       case FBError<List<TaskModel>>():
         isLoading = false;
@@ -53,18 +59,28 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 28.39.h,
         ),
         actions: [
-          SvgPicture.asset(
-            'assets/icons/logout.svg',
-            width: 24.w,
-            height: 24.w,
-          ),
-          SizedBox(width: 10.w),
-          Text(
-            'Log out',
-            style: TextStyle(
-              color: AppColor.red,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
+          InkWell(
+            onTap: () => {
+              FirebaseAuth.instance.signOut(),
+              Navigator.of(context).pushReplacementNamed(LoginScreen.pageRoute),
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/logout.svg',
+                  width: 24.w,
+                  height: 24.w,
+                ),
+                SizedBox(width: 10.w),
+                Text(
+                  'Log out',
+                  style: TextStyle(
+                    color: AppColor.red,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(width: 10.w),
@@ -153,7 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _addTask() {
-    print(FirebaseAuth.instance.currentUser?.email);
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
